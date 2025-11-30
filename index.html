@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python - Przewodnik dla Początkujących</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f4f4f4;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 2rem;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .code-container {
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            padding-top: 40px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .string {
+            color: #ce9178;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .function {
+            color: #dcdcaa;
+        }
+
+        .tip {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .quick-ref {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .quick-ref table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .quick-ref th,
+        .quick-ref td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .quick-ref th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .code-block {
+                font-size: 12px;
+                padding: 15px;
+                padding-top: 35px;
+            }
+        }
+
+        .example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .example strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐍 Python dla Początkujących</h1>
+        <p>Przewodnik po podstawach programowania</p>
+    </div>
+
+    <div class="container">
+        <nav class="nav">
+            <div class="nav-links">
+                <a href="#basics">Podstawy</a>
+                <a href="#control">Sterowanie</a>
+                <a href="#functions">Funkcje</a>
+                <a href="#data">Struktury danych</a>
+                <a href="#files">Pliki</a>
+                <a href="#errors">Błędy</a>
+                <a href="#help">Szybka pomoc</a>
+            </div>
+        </nav>
+
+        <section id="basics" class="section">
+            <h2>📝 Podstawy Pythona</h2>
+
+            <h3>Zmienne i typy danych</h3>
+            <p>W Pythonie nie musisz deklarować typu zmiennej - Python sam go rozpozna!</p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="comment"># Liczby całkowite</span>
+wiek = 25
+liczba_studentow = 100
+
+<span class="comment"># Liczby zmiennoprzecinkowe</span>
+cena = 19.99
+temperatura = -5.5
+
+<span class="comment"># Teksty (stringi)</span>
+imie = "Anna"
+wiadomosc = 'Witaj w Pythonie!'
+
+<span class="comment"># Wartości logiczne</span>
+czy_student = True
+czy_pracuje = False</pre>
+            </div>
+
+            <h3>Operatory matematyczne</h3>
+            <div class="quick-ref">
+                <table>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Opis</th>
+                        <th>Przykład</th>
+                    </tr>
+                    <tr>
+                        <td>+</td>
+                        <td>Dodawanie</td>
+                        <td>5 + 3 = 8</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>Odejmowanie</td>
+                        <td>5 - 3 = 2</td>
+                    </tr>
+                    <tr>
+                        <td>*</td>
+                        <td>Mnożenie</td>
+                        <td>5 * 3 = 15</td>
+                    </tr>
+                    <tr>
+                        <td>/</td>
+                        <td>Dzielenie</td>
+                        <td>5 / 2 = 2.5</td>
+                    </tr>
+                    <tr>
+                        <td>//</td>
+                        <td>Dzielenie całkowite</td>
+                        <td>5 // 2 = 2</td>
+                    </tr>
+                    <tr>
+                        <td>%</td>
+                        <td>Reszta z dzielenia (modulo)</td>
+                        <td>5 % 2 = 1</td>
+                    </tr>
+                    <tr>
+                        <td>**</td>
+                        <td>Potęgowanie</td>
+                        <td>5 ** 2 = 25</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Operatory porównania</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block">x = 10
+y = 5
+
+x == y  <span class="comment"># Równe? False</span>
+x != y  <span class="comment"># Różne? True</span>
+x > y   <span class="comment"># Większe? True</span>
+x < y   <span class="comment"># Mniejsze? False</span>
+x >= y  <span class="comment"># Większe lub równe? True</span>
+x <= y  <span class="comment"># Mniejsze lub równe? False</span></pre>
+            </div>
+        </section>
+
+        <section id="control" class="section">
+            <h2>🔀 Struktury sterujące</h2>
+
+            <h3>Instrukcja if/elif/else</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block">wiek = 18
+
+<span class="keyword">if</span> wiek < 13:
+    <span class="function">print</span>(<span class="string">"Dziecko"</span>)
+<span class="keyword">elif</span> wiek < 18:
+    <span class="function">print</span>(<span class="string">"Nastolatek"</span>)
+<span class="keyword">else</span>:
+    <span class="function">print</span>(<span class="string">"Dorosły"</span>)</pre>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Wcięcia są ważne!</strong> Python używa wcięć (spacji lub tabulatorów) do określania bloków kodu. Standardowo używa się 4 spacji.
+            </div>
+
+            <h3>Pętla for</h3>
+            <p>Służy do iterowania po sekwencjach (listy, zakresy, stringi itp.)</p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="comment"># Pętla przez zakres liczb</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="function">range</span>(5):
+    <span class="function">print</span>(i)  <span class="comment"># Wypisze: 0, 1, 2, 3, 4</span>
+
+<span class="comment"># Pętla przez listę</span>
+owoce = [<span class="string">"jabłko"</span>, <span class="string">"banan"</span>, <span class="string">"gruszka"</span>]
+<span class="keyword">for</span> owoc <span class="keyword">in</span> owoce:
+    <span class="function">print</span>(owoc)</pre>
+            </div>
+
+            <h3>Pętla while</h3>
+            <p>Wykonuje się dopóki warunek jest prawdziwy</p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block">licznik = 0
+<span class="keyword">while</span> licznik < 5:
+    <span class="function">print</span>(licznik)
+    licznik += 1  <span class="comment"># To samo co: licznik = licznik + 1</span></pre>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Uwaga!</strong> Upewnij się, że warunek w pętli while kiedyś stanie się fałszywy, inaczej stworzysz nieskończoną pętlę!
+            </div>
+        </section>
+
+        <section id="functions" class="section">
+            <h2>⚙️ Funkcje</h2>
+
+            <h3>Definiowanie funkcji</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="keyword">def</span> <span class="function">powitaj</span>(imie):
+    <span class="string">"""Funkcja wypisująca powitanie"""</span>
+    <span class="keyword">return</span> <span class="string">f"Witaj, {imie}!"</span>
+
+<span class="comment"># Wywołanie funkcji</span>
+wiadomosc = <span class="function">powitaj</span>(<span class="string">"Anna"</span>)
+<span class="function">print</span>(wiadomosc)  <span class="comment"># Wypisze: Witaj, Anna!</span></pre>
+            </div>
+
+            <h3>Funkcje z wieloma parametrami</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="keyword">def</span> <span class="function">dodaj</span>(a, b):
+    <span class="keyword">return</span> a + b
+
+<span class="keyword">def</span> <span class="function">oblicz_pole_prostokata</span>(dlugosc, szerokosc):
+    <span class="keyword">return</span> dlugosc * szerokosc
+
+wynik = <span class="function">dodaj</span>(5, 3)
+pole = <span class="function">oblicz_pole_prostokata</span>(10, 5)</pre>
+            </div>
+
+            <h3>Wartości domyślne parametrów</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="keyword">def</span> <span class="function">powitaj</span>(imie, powitanie=<span class="string">"Cześć"</span>):
+    <span class="keyword">return</span> <span class="string">f"{powitanie}, {imie}!"</span>
+
+<span class="function">print</span>(<span class="function">powitaj</span>(<span class="string">"Anna"</span>))              <span class="comment"># Cześć, Anna!</span>
+<span class="function">print</span>(<span class="function">powitaj</span>(<span class="string">"Anna"</span>, <span class="string">"Dzień dobry"</span>)) <span class="comment"># Dzień dobry, Anna!</span></pre>
+            </div>
+        </section>
+
+        <section id="data" class="section">
+            <h2>📊 Struktury danych</h2>
+
+            <h3>Listy</h3>
+            <p>Uporządkowane kolekcje, które można modyfikować</p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="comment"># Tworzenie listy</span>
+owoce = [<span class="string">"jabłko"</span>, <span class="string">"banan"</span>, <span class="string">"gruszka"</span>]
+
+<span class="comment"># Dostęp do elementów (indeksowanie od 0)</span>
+pierwszy = owoce[0]  <span class="comment"># "jabłko"</span>
+ostatni = owoce[-1]   <span class="comment"># "gruszka"</span>
+
+<span class="comment"># Dodawanie elementów</span>
+owoce.<span class="function">append</span>(<span class="string">"pomarańcza"</span>)
+
+<span class="comment"># Usuwanie elementów</span>
+owoce.<span class="function">remove</span>(<span class="string">"banan"</span>)
+
+<span class="comment"># Długość listy</span>
+ile = <span class="function">len</span>(owoce)</pre>
+            </div>
+
+            <h3>Słowniki</h3>
+            <p>Pary klucz-wartość (jak mały słownik tłumaczący)</p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="comment"># Tworzenie słownika</span>
+student = {
+    <span class="string">"imie"</span>: <span class="string">"Anna"</span>,
+    <span class="string">"wiek"</span>: 20,
+    <span class="string">"kierunek"</span>: <span class="string">"Informatyka"</span>
+}
+
+<span class="comment"># Dostęp do wartości</span>
+imie = student[<span class="string">"imie"</span>]
+
+<span class="comment"># Dodawanie/modyfikowanie</span>
+student[<span class="string">"rok"</span>] = 2
+
+<span class="comment"># Iterowanie po słowniku</span>
+<span class="keyword">for</span> klucz, wartosc <span class="keyword">in</span> student.<span class="function">items</span>():
+    <span class="function">print</span>(<span class="string">f"{klucz}: {wartosc}"</span>)</pre>
+            </div>
+
+            <h3>Przydatne operacje na listach</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block">liczby = [3, 1, 4, 1, 5, 9, 2, 6]
+
+<span class="comment"># Sortowanie</span>
+liczby.<span class="function">sort</span>()
+
+<span class="comment"># Odwracanie</span>
+liczby.<span class="function">reverse</span>()
+
+<span class="comment"># Wycinanie (slicing)</span>
+pierwsze_trzy = liczby[0:3]
+od_drugiego = liczby[1:]
+do_czwartego = liczby[:4]
+
+<span class="comment"># Sprawdzanie czy element jest w liście</span>
+<span class="keyword">if</span> 5 <span class="keyword">in</span> liczby:
+    <span class="function">print</span>(<span class="string">"Znaleziono!"</span>)</pre>
+            </div>
+        </section>
+
+        <section id="files" class="section">
+            <h2>📁 Praca z plikami</h2>
+
+            <h3>Odczyt z pliku</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="comment"># Odczyt całego pliku</span>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="string">"plik.txt"</span>, <span class="string">"r"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> plik:
+    zawartosc = plik.<span class="function">read</span>()
+    <span class="function">print</span>(zawartosc)
+
+<span class="comment"># Odczyt linijka po linijce</span>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="string">"plik.txt"</span>, <span class="string">"r"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> plik:
+    <span class="keyword">for</span> linia <span class="keyword">in</span> plik:
+        <span class="function">print</span>(linia.<span class="function">strip</span>())  <span class="comment"># strip() usuwa znaki białe</span></pre>
+            </div>
+
+            <h3>Zapis do pliku</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="comment"># Nadpisanie pliku</span>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="string">"wynik.txt"</span>, <span class="string">"w"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> plik:
+    plik.<span class="function">write</span>(<span class="string">"Pierwsza linia\n"</span>)
+    plik.<span class="function">write</span>(<span class="string">"Druga linia\n"</span>)
+
+<span class="comment"># Dopisanie do pliku</span>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="string">"wynik.txt"</span>, <span class="string">"a"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> plik:
+    plik.<span class="function">write</span>(<span class="string">"Trzecia linia\n"</span>)</pre>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tryby otwierania plików:</strong><br>
+                "r" - odczyt (read)<br>
+                "w" - zapis/nadpisanie (write)<br>
+                "a" - dopisywanie (append)<br>
+                "r+" - odczyt i zapis
+            </div>
+        </section>
+
+        <section id="errors" class="section">
+            <h2>🚨 Popularne błędy</h2>
+            <div class="quick-ref">
+                <table>
+                    <tr>
+                        <th>Błąd</th>
+                        <th>Znaczenie</th>
+                    </tr>
+                    <tr>
+                        <td>SyntaxError</td>
+                        <td>Błąd składni (np. brak dwukropka)</td>
+                    </tr>
+                    <tr>
+                        <td>IndentationError</td>
+                        <td>Błędne wcięcia</td>
+                    </tr>
+                    <tr>
+                        <td>NameError</td>
+                        <td>Użycie niezdefiniowanej zmiennej</td>
+                    </tr>
+                    <tr>
+                        <td>TypeError</td>
+                        <td>Niewłaściwy typ danych</td>
+                    </tr>
+                    <tr>
+                        <td>ValueError</td>
+                        <td>Zła wartość</td>
+                    </tr>
+                    <tr>
+                        <td>IndexError</td>
+                        <td>Indeks poza zakresem listy</td>
+                    </tr>
+                    <tr>
+                        <td>KeyError</td>
+                        <td>Brak klucza w słowniku</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section id="help" class="section">
+            <h2>🆘 Szybka pomoc</h2>
+
+            <div class="example">
+                <strong>Problem:</strong> "NameError: name 'x' is not defined"<br>
+                <strong>Rozwiązanie:</strong> Upewnij się, że zmienna została wcześniej zdefiniowana. Sprawdź literówki w nazwie.
+            </div>
+
+            <div class="example">
+                <strong>Problem:</strong> "IndentationError"<br>
+                <strong>Rozwiązanie:</strong> Sprawdź wcięcia - używaj konsekwentnie 4 spacji lub tabulatorów (nie mieszaj ich!).
+            </div>
+
+            <div class="example">
+                <strong>Problem:</strong> "IndexError: list index out of range"<br>
+                <strong>Rozwiązanie:</strong> Sprawdź długość listy (<code>len(lista)</code>) i upewnij się, że indeks nie jest większy niż długość-1.
+            </div>
+
+            <div class="example">
+                <strong>Problem:</strong> Program zapętla się w nieskończoność<br>
+                <strong>Rozwiązanie:</strong> Naciśnij Ctrl+C aby zatrzymać program. Sprawdź warunek w pętli while.
+            </div>
+
+            <h3>Przydatne komendy</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Kopiuj</button>
+                <pre class="code-block"><span class="comment"># Sprawdzenie typu zmiennej</span>
+<span class="function">type</span>(zmienna)
+
+<span class="comment"># Długość (listy, stringa, słownika)</span>
+<span class="function">len</span>(obiekt)
+
+<span class="comment"># Pomoc o funkcji</span>
+<span class="function">help</span>(<span class="function">print</span>)
+
+<span class="comment"># Konwersje typów</span>
+<span class="function">int</span>(<span class="string">"123"</span>)      <span class="comment"># string → int</span>
+<span class="function">float</span>(<span class="string">"3.14"</span>)    <span class="comment"># string → float</span>
+<span class="function">str</span>(123)         <span class="comment"># int → string</span>
+<span class="function">list</span>(<span class="string">"abc"</span>)      <span class="comment"># string → lista</span></pre>
+            </div>
+
+            <h3>Dobre praktyki</h3>
+            <ul style="margin-left: 20px; margin-top: 15px;">
+                <li style="margin-bottom: 10px;">✅ Używaj znaczących nazw zmiennych (<code>wiek</code> zamiast <code>x</code>)</li>
+                <li style="margin-bottom: 10px;">✅ Dodawaj komentarze dla skomplikowanych fragmentów</li>
+                <li style="margin-bottom: 10px;">✅ Testuj kod na małych przykładach</li>
+                <li style="margin-bottom: 10px;">✅ Rób wcięcia konsekwentnie (4 spacje)</li>
+                <li style="margin-bottom: 10px;">✅ Dziel duże programy na funkcje</li>
+                <li style="margin-bottom: 10px;">✅ Zapisuj często swoją pracę!</li>
+            </ul>
+        </section>
+
+        <div class="section" style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h3>Powodzenia w nauce programowania! 🚀</h3>
+            <p>Pamiętaj: każdy programista zaczynał od podstaw. Najważniejsza jest praktyka!</p>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Skopiowano!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Błąd kopiowania:', err);
+                button.textContent = 'Błąd!';
+                setTimeout(() => {
+                    button.textContent = 'Kopiuj';
+                }, 2000);
+            });
+        }
+
+        // Płynne przewijanie do sekcji
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
